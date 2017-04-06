@@ -1,0 +1,27 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            Setup
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <ion-card>
+        <ion-card-header>What are you looking for?</ion-card-header>
+        <ion-list>
+            <ion-item>
+                <ion-label>Diapers</ion-label>
+                <ion-checkbox color="royal" checked="true" [(ngModel)]="diapers"></ion-checkbox>
+            </ion-item>
+            <ion-item>
+                <ion-label>Formula</ion-label>
+                <ion-checkbox color="royal" checked="true" [(ngModel)]="formula"></ion-checkbox>
+            </ion-item>
+            <ion-item>
+                <ion-label>Clothes</ion-label>
+                <ion-checkbox color="royal" checked="true" [(ngModel)]="clothes"></ion-checkbox>
+            </ion-item>
+        </ion-list>
+    </ion-card>
+    <button ion-button block color="secondary" (click)="getNext()">Next</button>
+</ion-content>

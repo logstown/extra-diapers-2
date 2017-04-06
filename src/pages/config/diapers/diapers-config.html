@@ -1,0 +1,22 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            Setup
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <ion-card>
+        <ion-card-header>Brands</ion-card-header>
+        <ion-list>
+            <ion-item *ngFor="let item of brands | async">
+                <ion-label>{{item.$value}}</ion-label>
+                <ion-checkbox color="royal" [(ngModel)]="yourBrands[item.$key]"></ion-checkbox>
+            </ion-item>
+        </ion-list>
+    </ion-card>
+    <ion-card>
+        <ion-card-header>What are you looking for?</ion-card-header>
+    </ion-card>
+    <button ion-button block color="secondary" (click)="seeIt()">Next</button>
+</ion-content>
