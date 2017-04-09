@@ -5,7 +5,10 @@ import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
+import { LoginPage } from '../pages/login/login';
 import { DiapersConfigPage } from '../pages/pages';
+
+import { AuthService } from '../providers/auth-service';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -35,6 +38,7 @@ const cloudSettings: CloudSettings = {
     ContactPage,
     HomePage,
     TabsPage,
+    LoginPage,
     DiapersConfigPage
   ],
   imports: [
@@ -49,11 +53,13 @@ const cloudSettings: CloudSettings = {
     ContactPage,
     HomePage,
     TabsPage,
+    LoginPage,
     DiapersConfigPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    AuthService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
