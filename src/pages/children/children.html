@@ -1,0 +1,26 @@
+<!--
+  Generated template for the Children page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <ion-navbar>
+        <ion-title>Children</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <ion-list>
+        <ion-item *ngFor="let child of children">
+            <ion-icon name="happy" item-left></ion-icon>
+            <h2>{{child.name}}</h2>
+            <h3>{{child.dob | date:'mediumDate'}}</h3>
+            <!-- <p>I've had a pretty messed up day. If we just...</p> -->
+        </ion-item>
+    </ion-list>
+    <ion-fab top right edge>
+        <button ion-fab color="secondary" (click)="addChild()">
+            <ion-icon name="add"></ion-icon>
+        </button>
+    </ion-fab>
+</ion-content>

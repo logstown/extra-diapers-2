@@ -1,0 +1,37 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons start>
+            <button ion-button icon-only color="royal" (click)="dismiss()">
+                <ion-icon name="close-circle"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-title>
+            Add Child
+        </ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only color="royal" (click)="save()">
+                <ion-icon name="checkmark-circle"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-list inset>
+        <ion-item>
+            <ion-label fixed>Name</ion-label>
+            <ion-input type="text" [(ngModel)]="name"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label fixed>Date of Birth</ion-label>
+            <ion-datetime displayFormat="MMM D, YYYY" [(ngModel)]="dob"></ion-datetime>
+        </ion-item>
+        <ion-item>
+            <ion-label fixed>Sex</ion-label>
+            <ion-select [(ngModel)]="sex">
+                <ion-option value="u" selected="true">Unspecified</ion-option>
+                <ion-option value="f">Female</ion-option>
+                <ion-option value="m">Male</ion-option>
+            </ion-select>
+        </ion-item>
+    </ion-list>
+</ion-content>

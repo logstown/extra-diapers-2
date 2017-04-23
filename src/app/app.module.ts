@@ -6,6 +6,8 @@ import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/login/login';
+import { ChildrenPage } from '../pages/children/children';
+import { AddChildModalPage } from '../pages/children/children';
 import { DiapersConfigPage } from '../pages/pages';
 
 import { AuthService } from '../providers/auth-service';
@@ -17,7 +19,7 @@ import { AngularFireModule } from 'angularfire2';
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyChLTU8Bbbz7RROYDJJjbU-aiT6mqEAfJo",
+    apiKey: "AIzaSyChLTU8Bbbz7RROYDJJjbU-aiT6mqEAfJo",
     authDomain: "extra-diapers.firebaseapp.com",
     databaseURL: "https://extra-diapers.firebaseio.com",
     projectId: "extra-diapers",
@@ -26,41 +28,45 @@ export const firebaseConfig = {
 };
 
 const cloudSettings: CloudSettings = {
-  'core': {
-    'app_id': "fb8a9e9c"
-  }
+    'core': {
+        'app_id': "fb8a9e9c"
+    }
 };
 
 @NgModule({
-  declarations: [
-    MyApp,
-    AboutPage,
-    ContactPage,
-    HomePage,
-    TabsPage,
-    LoginPage,
-    DiapersConfigPage
-  ],
-  imports: [
-    IonicModule.forRoot(MyApp),
-    AngularFireModule.initializeApp(firebaseConfig),
-    CloudModule.forRoot(cloudSettings)
-  ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-    AboutPage,
-    ContactPage,
-    HomePage,
-    TabsPage,
-    LoginPage,
-    DiapersConfigPage
-  ],
-  providers: [
-    StatusBar,
-    SplashScreen,
-    AuthService,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
-  ]
+    declarations: [
+        MyApp,
+        AboutPage,
+        ContactPage,
+        HomePage,
+        TabsPage,
+        LoginPage,
+        ChildrenPage,
+        AddChildModalPage,
+        DiapersConfigPage
+    ],
+    imports: [
+        IonicModule.forRoot(MyApp),
+        AngularFireModule.initializeApp(firebaseConfig),
+        CloudModule.forRoot(cloudSettings)
+    ],
+    bootstrap: [IonicApp],
+    entryComponents: [
+        MyApp,
+        AboutPage,
+        ContactPage,
+        HomePage,
+        TabsPage,
+        LoginPage,
+        ChildrenPage,
+        AddChildModalPage,
+        DiapersConfigPage
+    ],
+    providers: [
+        StatusBar,
+        SplashScreen,
+        AuthService,
+        { provide: ErrorHandler, useClass: IonicErrorHandler }
+    ]
 })
 export class AppModule {}
