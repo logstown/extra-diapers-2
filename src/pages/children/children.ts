@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ModalController, ViewController } from 'ionic-angular';
+import { ChildPage } from '../child/child';
+import moment from 'moment';
 
 /*
   Generated class for the Children page.
@@ -30,6 +32,20 @@ export class ChildrenPage {
                 this.children.push(data)
             }
         });
+    }
+
+    getAge(dob) {
+        let yearsOld = moment().diff(dob, 'years');
+
+        if (yearsOld < 2) {
+            return moment().diff(dob, 'months') + ' months'
+        } else {
+            return yearsOld + ' years';
+        }
+    }
+
+    goToChild(child) {
+        this.navCtrl.push(ChildPage)
     }
 
 }

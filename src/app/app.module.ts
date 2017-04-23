@@ -7,6 +7,7 @@ import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/login/login';
 import { ChildrenPage } from '../pages/children/children';
+import { ChildPage } from '../pages/child/child';
 import { AddChildModalPage } from '../pages/children/children';
 import { DiapersConfigPage } from '../pages/pages';
 
@@ -42,6 +43,7 @@ const cloudSettings: CloudSettings = {
         TabsPage,
         LoginPage,
         ChildrenPage,
+        ChildPage,
         AddChildModalPage,
         DiapersConfigPage
     ],
@@ -59,6 +61,7 @@ const cloudSettings: CloudSettings = {
         TabsPage,
         LoginPage,
         ChildrenPage,
+        ChildPage,
         AddChildModalPage,
         DiapersConfigPage
     ],

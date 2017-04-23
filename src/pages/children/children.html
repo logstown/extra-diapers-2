@@ -11,12 +11,11 @@
 </ion-header>
 <ion-content padding>
     <ion-list>
-        <ion-item *ngFor="let child of children">
+        <button ion-item *ngFor="let child of children" (click)="goToChild(child)">
             <ion-icon name="happy" item-left></ion-icon>
             <h2>{{child.name}}</h2>
-            <h3>{{child.dob | date:'mediumDate'}}</h3>
-            <!-- <p>I've had a pretty messed up day. If we just...</p> -->
-        </ion-item>
+            <h3>{{getAge(child.dob)}}</h3>
+        </button>
     </ion-list>
     <ion-fab top right edge>
         <button ion-fab color="secondary" (click)="addChild()">
