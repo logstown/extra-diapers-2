@@ -53,8 +53,5 @@
       "locator": "ios"
     }
   ],
-  "description": "extra-diapers-2: An Ionic project",
-  "config": {
-    "ionic_source_map_type": "eval"
-  }
+  "description": "extra-diapers-2: An Ionic project"
 }

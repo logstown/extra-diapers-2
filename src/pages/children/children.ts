@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController, ViewController } from 'ionic-angular';
+import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { AuthService } from '../../providers/auth-service';
 import { ChildPage } from '../child/child';
+import { AddChildModalPage } from './add-child-modal';
 import moment from 'moment';
 
 /*
@@ -54,31 +55,4 @@ export class ChildrenPage {
         this.navCtrl.push(ChildPage, child)
     }
 
-}
-
-@Component({
-    templateUrl: 'add-child-modal.html'
-})
-export class AddChildModalPage {
-    name: string
-    dob: string
-    sex: string
-
-    constructor(public viewCtrl: ViewController) {}
-
-    ionViewDidLoad() {
-        this.sex = 'u'
-    }
-
-    dismiss() {
-        this.viewCtrl.dismiss();
-    }
-
-    save() {
-        this.viewCtrl.dismiss({
-            name: this.name,
-            dob: this.dob,
-            sex: this.sex
-        })
-    }
 }

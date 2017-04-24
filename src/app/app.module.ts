@@ -8,7 +8,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/login/login';
 import { ChildrenPage } from '../pages/children/children';
 import { ChildPage } from '../pages/child/child';
-import { AddChildModalPage } from '../pages/children/children';
+import { AddChildModalPage } from '../pages/children/add-child-modal';
 import { DiapersConfigPage } from '../pages/pages';
 
 import { AuthService } from '../providers/auth-service';
