@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ModalController, ViewController } from 'ionic-angular';
+import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { AuthService } from '../../providers/auth-service';
 import { ChildPage } from '../child/child';
 import moment from 'moment';
 
@@ -14,12 +16,15 @@ import moment from 'moment';
     templateUrl: 'children.html'
 })
 export class ChildrenPage {
-    children: any[]
+    children: FirebaseListObservable < any[] >
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController) {}
+        constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, af: AngularFire, private _auth: AuthService) {
+            let uid = _auth.getUid()
+
+            this.children = af.database.list('/children/' + uid);
+        }
 
     ionViewDidLoad() {
-        this.children = []
         console.log('ionViewDidLoad ChildrenPage');
     }
 
@@ -45,7 +50,8 @@ export class ChildrenPage {
     }
 
     goToChild(child) {
-        this.navCtrl.push(ChildPage)
+        console.log(child.$key)
+        this.navCtrl.push(ChildPage, child)
     }
 
 }

@@ -11,7 +11,7 @@
 </ion-header>
 <ion-content padding>
     <ion-list>
-        <button ion-item *ngFor="let child of children" (click)="goToChild(child)">
+        <button ion-item *ngFor="let child of children | async" (click)="goToChild(child)">
             <ion-icon name="happy" item-left></ion-icon>
             <h2>{{child.name}}</h2>
             <h3>{{getAge(child.dob)}}</h3>
