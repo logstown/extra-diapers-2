@@ -1,5 +1,6 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { BrowserModule } from '@angular/platform-browser';
 import { MyApp } from './app.component';
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
@@ -17,7 +18,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { AngularFireModule } from 'angularfire2';
-import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 
 export const firebaseConfig = {
     apiKey: "AIzaSyChLTU8Bbbz7RROYDJJjbU-aiT6mqEAfJo",
@@ -26,12 +26,6 @@ export const firebaseConfig = {
     projectId: "extra-diapers",
     storageBucket: "extra-diapers.appspot.com",
     messagingSenderId: "696131233205"
-};
-
-const cloudSettings: CloudSettings = {
-    'core': {
-        'app_id': "fb8a9e9c"
-    }
 };
 
 @NgModule({
@@ -48,9 +42,9 @@ const cloudSettings: CloudSettings = {
         DiapersConfigPage
     ],
     imports: [
+        BrowserModule,
         IonicModule.forRoot(MyApp),
-        AngularFireModule.initializeApp(firebaseConfig),
-        CloudModule.forRoot(cloudSettings)
+        AngularFireModule.initializeApp(firebaseConfig)
     ],
     bootstrap: [IonicApp],
     entryComponents: [
