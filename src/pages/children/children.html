@@ -11,11 +11,37 @@
 </ion-header>
 <ion-content padding>
     <ion-list>
-        <button ion-item *ngFor="let child of children | async" (click)="goToChild(child)">
-            <ion-icon name="happy" item-left></ion-icon>
-            <h2>{{child.name}}</h2>
-            <h3>{{getAge(child.dob)}}</h3>
-        </button>
+        <ng-container *ngFor="let child of children">
+            <ion-list-header (click)="toggleExpand(child)">
+                <ion-icon name="arrow-dropright" item-left [hidden]="child.expanded"></ion-icon>
+                <ion-icon name="arrow-dropdown" item-left [hidden]="!child.expanded"></ion-icon>
+                <h2>{{child.name}}</h2>
+                <h3>{{getAge(child.dob)}}</h3>
+            </ion-list-header>
+            <ng-container *ngIf="child.expanded">
+                <button ion-item>
+                    <ion-icon name="egg" item-left></ion-icon>
+                    Diapers
+                    <ion-note item-right>
+                        {{getPreferenceState(child, 'diapers')}}
+                    </ion-note>
+                </button>
+                <button ion-item>
+                    <ion-icon name="water" item-left></ion-icon>
+                    Formula
+                    <ion-note item-right>
+                        {{getPreferenceState(child, 'formula')}}
+                    </ion-note>
+                </button>
+                <button ion-item>
+                    <ion-icon name="shirt" item-left></ion-icon>
+                    Clothes
+                    <ion-note item-right>
+                        {{getPreferenceState(child, 'clothes')}}
+                    </ion-note>
+                </button>
+            </ng-container>
+        </ng-container>
     </ion-list>
     <ion-fab top right edge>
         <button ion-fab color="secondary" (click)="addChild()">
