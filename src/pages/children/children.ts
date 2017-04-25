@@ -19,13 +19,13 @@ import moment from 'moment';
 export class ChildrenPage {
   afChildren: FirebaseListObservable < any[] >
     children: any[]
-  childPreferences: any[]
+  childEntityStates: any[]
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public af: AngularFire, private _auth: AuthService) {
     let uid = _auth.getUid()
 
     this.afChildren = af.database.list('/children/' + uid);
-    this.childPreferences = [];
+    this.childEntityStates = [];
   }
 
   ionViewDidLoad() {
@@ -34,9 +34,9 @@ export class ChildrenPage {
         this.children = data
 
         this.children.forEach((child) => {
-          this.childPreferences[child.$key] = this.af.database.object('/preferences/' + child.$key + '/states')
+          this.childEntityStates[child.$key] = this.af.database.object('/preferences/' + child.$key + '/states')
             .subscribe(prefData => {
-              this.childPreferences[child.$key] = prefData
+              this.childEntityStates[child.$key] = prefData
             })
         })
       })
@@ -68,14 +68,18 @@ export class ChildrenPage {
     this.navCtrl.push(ChildPage, child)
   }
 
-  getPreferenceState(child, entity) {
-    let preference = this.childPreferences[child.$key];
+  goToEntity(child, entity) {
 
-    if (!preference) {
+  }
+
+  getEntityState(child, entity) {
+    let entityStates = this.childEntityStates[child.$key];
+
+    if (!entityStates) {
       return '';
     }
 
-    return preference[entity] ? 'On' : 'Off';
+    return entityStates[entity] ? 'On' : 'Off';
   }
 
   toggleExpand(childToToggle) {
