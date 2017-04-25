@@ -34,10 +34,10 @@ export class ChildrenPage {
         this.children = data
 
         this.children.forEach((child) => {
-          this.childPreferences[child.$key] = this.af.database.object('/preferences/' + child.$key)
-            // .subscribe(prefData => {
-            //   this.childPreferences[child.$key] = prefData
-            // })
+          this.childPreferences[child.$key] = this.af.database.object('/preferences/' + child.$key + '/states')
+            .subscribe(prefData => {
+              this.childPreferences[child.$key] = prefData
+            })
         })
       })
   }
@@ -75,11 +75,7 @@ export class ChildrenPage {
       return '';
     }
 
-    if (!preference[entity] || !preference[entity].state) {
-      return 'Off'
-    } else {
-      return 'On';
-    }
+    return preference[entity] ? 'On' : 'Off';
   }
 
   toggleExpand(childToToggle) {
@@ -87,7 +83,7 @@ export class ChildrenPage {
       if (childToToggle.$key === child.$key) {
         setTimeout(() => {
           childToToggle.expanded = !childToToggle.expanded
-        }, 200)
+        }, 100)
       } else {
         child.expanded = false;
       }
