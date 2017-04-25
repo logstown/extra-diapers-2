@@ -11,32 +11,35 @@ import { TabsPage } from '../tabs/tabs';
   Ionic pages and navigation.
 */
 @Component({
-    selector: 'page-login',
-    templateUrl: 'login.html'
+  selector: 'page-login',
+  templateUrl: 'login.html'
 })
 export class LoginPage {
 
-    items: FirebaseListObservable < any[] > ;
+  items: FirebaseListObservable < any[] > ;
 
-    constructor(public navCtrl: NavController, af: AngularFire, private _auth: AuthService) {
-        this.items = af.database.list('/items');
-    }
+  constructor(public navCtrl: NavController, af: AngularFire, private _auth: AuthService) {
+    this.items = af.database.list('/items');
+  }
 
-    ionViewWillEnter() {
-        if (this._auth.authenticated) {
-            this.navCtrl.setRoot(TabsPage)
+  ionViewWillEnter() {
+    this._auth.getAuth()
+      .subscribe((data) => {
+        if (data !== null) {
+          this.navCtrl.setRoot(TabsPage)
         }
-    }
+      })
+  }
 
-    login(): void {
-        this._auth.signInWithFacebook()
-            .then(() => this.onSignInSuccess());
-    }
+  login(): void {
+    this._auth.signInWithFacebook()
+      .then(() => this.onSignInSuccess());
+  }
 
-    private onSignInSuccess(): void {
-        console.log("Facebook display name ", this._auth.displayName());
+  private onSignInSuccess(): void {
+    console.log("Facebook display name ", this._auth.displayName());
 
-        this.navCtrl.setRoot(TabsPage)
-    }
+    this.navCtrl.setRoot(TabsPage)
+  }
 
 }
