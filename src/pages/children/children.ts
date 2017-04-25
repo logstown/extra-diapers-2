@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { AuthService } from '../../providers/auth-service';
-import { ChildPage } from '../child/child';
 import { AddChildModalPage } from './add-child-modal';
+import { Diapers } from '../diapers/diapers'
 import moment from 'moment';
 
 /*
@@ -63,13 +63,22 @@ export class ChildrenPage {
     }
   }
 
-  goToChild(child) {
-    console.log(child.$key)
-    this.navCtrl.push(ChildPage, child)
-  }
-
   goToEntity(child, entity) {
+  	var navOptions = {
+      animation: 'ios-transition'
+ };
 
+    switch(entity) {
+     	case 'diapers':
+     		this.navCtrl.push(Diapers, child, navOptions);
+     		break;
+     	case 'formula':
+     		// this.navCtrl.push(FormulaPage, child.$key);
+     		break;
+     	case 'clothes':
+     		// this.navCtrl.push(ClothesPage, child.$key);
+     		break;	
+    }
   }
 
   getEntityState(child, entity) {

@@ -19,21 +19,21 @@
                 <h3>{{getAge(child.dob)}}</h3>
             </ion-list-header>
             <ng-container *ngIf="child.expanded">
-                <button ion-item>
+                <button ion-item (click)="goToEntity(child, 'diapers')">
                     <ion-icon name="egg" item-left></ion-icon>
                     Diapers
                     <ion-note item-right>
                         {{getEntityState(child, 'diapers')}}
                     </ion-note>
                 </button>
-                <button ion-item>
+                <button ion-item (click)="goToEntity(child, 'formula')">
                     <ion-icon name="water" item-left></ion-icon>
                     Formula
                     <ion-note item-right>
                         {{getEntityState(child, 'formula')}}
                     </ion-note>
                 </button>
-                <button ion-item>
+                <button ion-item (click)="goToEntity(child, 'clothes')">
                     <ion-icon name="shirt" item-left></ion-icon>
                     Clothes
                     <ion-note item-right>

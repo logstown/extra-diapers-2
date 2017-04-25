@@ -1,0 +1,29 @@
+<!--
+  Generated template for the Diapers page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{child.name}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+<ion-list>
+	<ion-list-header>
+	  <ion-label>Diapers</ion-label>
+	  <ion-toggle checked="false"></ion-toggle>
+	</ion-list-header>
+	<ion-item-divider color="light">
+	Size
+	<ion-badge item-right>{{getRange()}}</ion-badge>
+	</ion-item-divider>
+	<ion-item>
+	  <ion-range dualKnobs="true" [(ngModel)]="sizeRange" min="0" max="9" snaps="true" color="secondary"></ion-range>
+	</ion-item>
+</ion-list>
+</ion-content>
