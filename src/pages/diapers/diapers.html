@@ -14,10 +14,10 @@
     <ion-list no-lines>
         <ion-item>
             <ion-label>Diapers</ion-label>
-            <ion-toggle [ngModel]="(userPrefs| async)?.state" (ngModelChange)="userPrefs.update({state:$event})"></ion-toggle>
+            <ion-toggle [ngModel]="(states| async)?.diapers" (ngModelChange)="states.update({diapers:$event})"></ion-toggle>
         </ion-item>
     </ion-list>
-    <ion-list *ngIf="(userPrefs | async)?.state">
+    <ion-list *ngIf="(states | async)?.diapers">
         <ion-list-header>
             Size
             <ion-badge item-right>{{getRange()}}</ion-badge>

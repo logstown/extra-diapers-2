@@ -64,20 +64,20 @@ export class ChildrenPage {
   }
 
   goToEntity(child, entity) {
-  	var navOptions = {
+    var navOptions = {
       animation: 'ios-transition'
- };
+    };
 
-    switch(entity) {
-     	case 'diapers':
-     		this.navCtrl.push(Diapers, child, navOptions);
-     		break;
-     	case 'formula':
-     		// this.navCtrl.push(FormulaPage, child.$key);
-     		break;
-     	case 'clothes':
-     		// this.navCtrl.push(ClothesPage, child.$key);
-     		break;	
+    switch (entity) {
+      case 'diapers':
+        this.navCtrl.push(Diapers, child, navOptions);
+        break;
+      case 'formula':
+        // this.navCtrl.push(FormulaPage, child.$key);
+        break;
+      case 'clothes':
+        // this.navCtrl.push(ClothesPage, child.$key);
+        break;
     }
   }
 

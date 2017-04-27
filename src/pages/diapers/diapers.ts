@@ -18,12 +18,14 @@ import 'rxjs/add/operator/take'
 export class Diapers {
   child: any
   userPrefs: FirebaseObjectObservable < any >
+  states: FirebaseObjectObservable < any >
     sizeOptions: any = {};
   sizeRange: { lower: number;upper: number } = { lower: 0, upper: 8 }
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private af: AngularFire) {
     this.child = this.navParams.data;
     this.userPrefs = af.database.object('/preferences/' + this.child.$key + '/diapers/')
+    this.states = af.database.object('/preferences/' + this.child.$key + '/states/')
 
     this.userPrefs
       .subscribe(data => {
