@@ -34,7 +34,7 @@ export class ChildrenPage {
         this.children = data
 
         this.children.forEach((child) => {
-          this.childEntityStates[child.$key] = this.af.database.object('/preferences/' + child.$key + '/states')
+          this.af.database.object('/preferences/' + child.$key + '/states')
             .subscribe(prefData => {
               this.childEntityStates[child.$key] = prefData
             })

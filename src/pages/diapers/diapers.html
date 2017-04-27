@@ -16,14 +16,14 @@
 <ion-list>
 	<ion-list-header>
 	  <ion-label>Diapers</ion-label>
-	  <ion-toggle checked="false"></ion-toggle>
+	  <ion-toggle [(ngModel)]="userPreferencesObs.state"></ion-toggle>
 	</ion-list-header>
 	<ion-item-divider color="light">
 	Size
 	<ion-badge item-right>{{getRange()}}</ion-badge>
 	</ion-item-divider>
 	<ion-item>
-	  <ion-range dualKnobs="true" [(ngModel)]="sizeRange" min="0" max="9" snaps="true" color="secondary"></ion-range>
+	  <ion-range dualKnobs="true" [(ngModel)]="sizeRange" min="0" max="8" snaps="true" debounce="500" color="secondary" (ngModelChange)="setSizePreference()"></ion-range>
 	</ion-item>
 </ion-list>
 </ion-content>
