@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
+import { AngularFire, FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2';
 import _ from 'lodash';
 import 'rxjs/add/operator/take'
 
@@ -19,13 +19,14 @@ export class Diapers {
   child: any
   userPrefs: FirebaseObjectObservable < any >
   states: FirebaseObjectObservable < any >
+  brandOptions: any = []
     sizeOptions: any = {};
   sizeRange: { lower: number;upper: number } = { lower: 0, upper: 8 }
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private af: AngularFire) {
     this.child = this.navParams.data;
     this.userPrefs = af.database.object('/preferences/' + this.child.$key + '/diapers/')
-    this.states = af.database.object('/preferences/' + this.child.$key + '/states/')
+    this.states = af.database.object('/preferences/' + this.child.$key + '/states/');
 
     this.userPrefs
       .subscribe(data => {
@@ -43,6 +44,11 @@ export class Diapers {
     af.database.object('/options/diapers/sizes')
       .subscribe(data => {
         this.sizeOptions = data;
+      })
+
+      af.database.list('/options/diapers/brands')
+      .subscribe(data => {
+        this.brandOptions = data
       })
   }
 
@@ -89,4 +95,20 @@ export class Diapers {
 
     this.userPrefs.update({ sizes: sizes })
   }
+
+  addBrand(brand) {
+    var brands = {}
+
+    brands[brand.$key] = brand.$value;
+
+    this.userPrefs.update({
+      brands: brands
+    })
+    .then(() => {
+
+    })
+  }
 }
+
+
+// Brands needs to go back to an async array, then we're going to have to build a pipe to filter out the ones already in the user preferences
