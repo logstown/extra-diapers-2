@@ -17,109 +17,74 @@ import 'rxjs/add/operator/take'
 })
 export class Diapers {
   child: any
-  userPreferencesObs: FirebaseObjectObservable < any >
-    options: any = {};
+  userPrefs: FirebaseObjectObservable < any >
+    sizeOptions: any = {};
   sizeRange: { lower: number;upper: number } = { lower: 0, upper: 8 }
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private af: AngularFire) {
     this.child = this.navParams.data;
-    this.userPreferencesObs = af.database.object('/preferences/' + this.child.$key + '/diapers')
+    this.userPrefs = af.database.object('/preferences/' + this.child.$key + '/diapers/')
 
-    this.userPreferencesObs
+    this.userPrefs
       .subscribe(data => {
-        console.log(data)
-        var keys = _.keys(data.sizes)
-
-        console.log(+_.first(keys))
+        var indices = _.chain(data.sizes)
+          .values()
+          .map(this.getSizeIndex)
+          .value()
 
         this.sizeRange = {
-          lower: +_.first(keys) || 0,
-          upper: +_.last(keys) || 8
+          lower: +_.min(indices) || 0,
+          upper: +_.max(indices) || 8
         }
-
-        console.log(this.sizeRange)
-
       });
 
-    af.database.object('/options/diapers')
+    af.database.object('/options/diapers/sizes')
       .subscribe(data => {
-        this.options = data;
-        console.log(this.options)
+        this.sizeOptions = data;
       })
   }
 
-  ionViewDidLoad() {
-    // this.seedStuff();
-  }
-
-  seedStuff() {
-    let everything = this.af.database.object('/').take(1)
-
-    everything.subscribe(data => {
-
-      console.log(data)
-
-      let clothesSizes = this.af.database.list('/options/clothes/sizes');
-      let clothesTypes = this.af.database.list('/options/clothes/types');
-      let diaperBrands = this.af.database.list('/options/diapers/brands');
-      let diaperSizes = this.af.database.list('/options/diapers/sizes');
-      let formulaBrands = this.af.database.list('/options/formula/brands');
-      let formulaStages = this.af.database.list('/options/formula/stages');
-      let formulaTypes = this.af.database.list('/options/formula/types');
-
-      data.clothes.sizes.forEach(size => {
-        clothesSizes.push(size);
-      })
-
-      data.clothes.types.forEach(thing => {
-        clothesTypes.push(thing);
-      })
-
-      data.diapers.brands.forEach(thing => {
-        diaperBrands.push(thing);
-      })
-
-      data.diapers.sizes.forEach(thing => {
-        diaperSizes.push(thing);
-      })
-
-      data.formula.brands.forEach(thing => {
-        formulaBrands.push(thing);
-      })
-
-      data.formula.stages.forEach(thing => {
-        formulaStages.push(thing);
-      })
-
-      data.formula.types.forEach(thing => {
-        formulaTypes.push(thing);
-      })
-    })
-  }
+  ionViewDidLoad() {}
 
   getRange() {
     return this.getSizeText(this.sizeRange.lower) + ' - ' + this.getSizeText(this.sizeRange.upper);
   }
 
-  getSizeText(num): string {
-    if (Object.keys(this.options).length) {
-      return this.options.sizes[num];
+  getSizeText(num) {
+    switch (num) {
+      case 0:
+        return 'Preemie';
+
+      case 1:
+        return 'Newborn';
+
+      default:
+        return (num - 1);
     }
   }
 
-  setSizePreference() {
-    let range: any[] = _.range(this.sizeRange.lower, this.sizeRange.upper)
-    let rangeObject = _.toPlainObject(range);
-    var sizes = _.chain(rangeObject)
-      .invert()
-      .mapValues(function() {
-        return true;
-      })
-      .value()
+  getSizeIndex(size) {
+    switch (size) {
+      case 'Preemie':
+        return 0;
 
-    console.log(sizes)
+      case 'Newborn':
+        return 1;
 
-    this.userPreferencesObs.update({ sizes: sizes })
+      default:
+        return size + 1;
+    }
   }
 
+  setSizePreference(sizeOptions) {
+    let range: any[] = _.range(this.sizeRange.lower, this.sizeRange.upper + 1);
+    let namedRange = _.map(range, this.getSizeText)
+    let rangeObject: any = _.toPlainObject(namedRange);
+
+    var sizes = _.mapKeys(rangeObject, function(size) {
+      return _.findKey(sizeOptions, _.partial(_.isEqual, size))
+    })
+
+    this.userPrefs.update({ sizes: sizes })
+  }
 }
