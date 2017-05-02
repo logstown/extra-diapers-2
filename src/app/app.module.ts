@@ -15,58 +15,61 @@ import { DiapersConfigPage } from '../pages/pages';
 
 import { AuthService } from '../providers/auth-service';
 
+import { MyFilterPipe } from '../shared/filter-pipe'
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { AngularFireModule } from 'angularfire2';
 
 export const firebaseConfig = {
-    apiKey: "AIzaSyChLTU8Bbbz7RROYDJJjbU-aiT6mqEAfJo",
-    authDomain: "extra-diapers.firebaseapp.com",
-    databaseURL: "https://extra-diapers.firebaseio.com",
-    projectId: "extra-diapers",
-    storageBucket: "extra-diapers.appspot.com",
-    messagingSenderId: "696131233205"
+  apiKey: "AIzaSyChLTU8Bbbz7RROYDJJjbU-aiT6mqEAfJo",
+  authDomain: "extra-diapers.firebaseapp.com",
+  databaseURL: "https://extra-diapers.firebaseio.com",
+  projectId: "extra-diapers",
+  storageBucket: "extra-diapers.appspot.com",
+  messagingSenderId: "696131233205"
 };
 
 @NgModule({
-    declarations: [
-        MyApp,
-        AboutPage,
-        ContactPage,
-        HomePage,
-        TabsPage,
-        LoginPage,
-        ChildrenPage,
-        ChildPage,
-        AddChildModalPage,
-        Diapers,
-        DiapersConfigPage
-    ],
-    imports: [
-        BrowserModule,
-        IonicModule.forRoot(MyApp),
-        AngularFireModule.initializeApp(firebaseConfig)
-    ],
-    bootstrap: [IonicApp],
-    entryComponents: [
-        MyApp,
-        AboutPage,
-        ContactPage,
-        HomePage,
-        TabsPage,
-        LoginPage,
-        ChildrenPage,
-        ChildPage,
-        AddChildModalPage,
-        Diapers,
-        DiapersConfigPage
-    ],
-    providers: [
-        StatusBar,
-        SplashScreen,
-        AuthService,
-        { provide: ErrorHandler, useClass: IonicErrorHandler }
-    ]
+  declarations: [
+    MyApp,
+    AboutPage,
+    ContactPage,
+    HomePage,
+    TabsPage,
+    LoginPage,
+    ChildrenPage,
+    ChildPage,
+    AddChildModalPage,
+    Diapers,
+    DiapersConfigPage,
+    MyFilterPipe
+  ],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(firebaseConfig)
+  ],
+  bootstrap: [IonicApp],
+  entryComponents: [
+    MyApp,
+    AboutPage,
+    ContactPage,
+    HomePage,
+    TabsPage,
+    LoginPage,
+    ChildrenPage,
+    ChildPage,
+    AddChildModalPage,
+    Diapers,
+    DiapersConfigPage
+  ],
+  providers: [
+    StatusBar,
+    SplashScreen,
+    AuthService,
+    { provide: ErrorHandler, useClass: IonicErrorHandler }
+  ]
 })
 export class AppModule {}

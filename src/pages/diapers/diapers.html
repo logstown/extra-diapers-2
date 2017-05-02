@@ -9,58 +9,50 @@
         <ion-title>{{child.name}}</ion-title>
     </ion-navbar>
 </ion-header>
-<ion-content>
+<ion-content padding>
     <ion-list>
         <ion-list-header>
             <ion-label>Diapers</ion-label>
-            <ion-toggle [ngModel]="(states| async)?.diapers" (ngModelChange)="states.update({diapers:$event})"></ion-toggle>
+            <ion-toggle [ngModel]="(states | async)?.diapers" (ngModelChange)="states.update({diapers:$event})"></ion-toggle>
         </ion-list-header>
     </ion-list>
     <ng-container *ngIf="(states | async)?.diapers">
-        <!-- <ion-card>
-            <ion-list no-lines>
-                <ion-item>
-                    Size
-                    <ion-badge item-right>{{getRange()}}</ion-badge>
-                </ion-item>
-                <ion-item>
-                    <ion-range dualKnobs="true" [(ngModel)]="sizeRange" min="0" max="8" snaps="true" debounce="1000" color="secondary" pin="true" (ngModelChange)="setSizePreference(sizeOptions)"></ion-range>
-                </ion-item>
-            </ion-list>
-        </ion-card> -->
         <ion-list>
-        	<ion-item>
-        		<ion-label>Size</ion-label>
-        		<ion-select [(ngModel)]="sizePref" interface="popover" (ngModelChange)="updateSizePref()">
-        			<ion-option *ngFor="let option of sizeOptions" [value]="option.$key" >{{option.$value}}</ion-option>
-        		</ion-select>
-        		<ion-select [(ngModel)]="isRange" interface="popover" (ngModelChange)="updateSizePref()">
-        			<ion-option [value]="false">Exactly</ion-option>
-        			<ion-option [value]="true">Or Larger</ion-option>
-        		</ion-select>
-        	</ion-item>
+            <ion-item>
+                <ion-label>Size</ion-label>
+                <ion-select [(ngModel)]="sizePref" interface="popover" (ngModelChange)="updateSizePref()">
+                    <ion-option *ngFor="let option of sizeOptions" [value]="option.$key">{{option.$value}}</ion-option>
+                </ion-select>
+                <ion-select [(ngModel)]="sizeQuantity" interface="popover" (ngModelChange)="updateSizePref()">
+                    <ion-option value="exactly">Exactly</ion-option>
+                    <ion-option value="range">Or Larger</ion-option>
+                </ion-select>
+            </ion-item>
         </ion-list>
         <ion-grid style="margin-top: 20px; padding-bottom: 10px;">
-            <ion-row>
+            <ion-row justify-content-start>
                 <ion-col col-3>Brands:</ion-col>
                 <ion-col col-9>
-                <!-- <ion-note>Please choose a brand or two:</ion-note> -->
-                    <ion-chip item-right color="primary">
-                        <ion-label>Thing</ion-label>
-                        <button ion-button clear color="light" (click)="delete(chip1)">
+                    <ion-note *ngIf="!brandsPref.length">Please choose a brand or two:</ion-note>
+                    <ion-chip item-right color="primary" *ngFor="let brand of brandsPref">
+                        <ion-label>{{brand.$value}}</ion-label>
+                        <button ion-button clear color="light" (click)="removeBrand(brand)">
                             <ion-icon name="close-circle"></ion-icon>
                         </button>
                     </ion-chip>
                 </ion-col>
             </ion-row>
         </ion-grid>
-        <ion-list style="height: 50%; overflow-y: scroll;">
-            <ion-item *ngFor="let brand of brandOptions" (click)="addBrand(brand)">
-            	<ion-avatar item-left>
-            		<img src="/assets/diapers/huggies.png" alt="">
-            	</ion-avatar>
-                {{brand.$value}}
-            </ion-item>
-        </ion-list>
+        <ion-card style="height: 50%; overflow-y: scroll;">
+            <ion-list>
+                <ion-item *ngFor="let brand of brandOptions | async | myfilter:brandsPref" (click)="addBrand(brand)">
+                    <ion-avatar item-left>
+                        <img src="/assets/diapers/huggies.png" alt="">
+                    </ion-avatar>
+                    {{brand.$value}}
+                    <ion-icon name="add" item-right></ion-icon>
+                </ion-item>
+            </ion-list>
+        </ion-card>
     </ng-container>
 </ion-content>

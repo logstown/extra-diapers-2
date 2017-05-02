@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { AngularFire, FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2';
 import _ from 'lodash';
 import 'rxjs/add/operator/take'
@@ -17,31 +17,21 @@ import 'rxjs/add/operator/take'
 })
 export class Diapers {
   child: any
-  userPrefs: FirebaseObjectObservable < any >
-    sizePref: any = {}
+  sizePref: any = {}
   states: FirebaseObjectObservable < any >
-    brandOptions: any = []
+    brandOptions: FirebaseListObservable < any >
+    brandsPref: any = []
   sizeOptions: any[] = []
   sizeRange: { lower: number;upper: number } = { lower: 0, upper: 8 }
-  isRange: boolean
+  sizeQuantity: string
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private af: AngularFire) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private af: AngularFire, public loadingCtrl: LoadingController) {
     this.child = this.navParams.data;
-    this.userPrefs = af.database.object('/preferences/' + this.child.$key + '/diapers/')
     this.states = af.database.object('/preferences/' + this.child.$key + '/states/');
 
-    this.userPrefs
-      .subscribe(data => {
-        var indices = _.chain(data.sizes)
-          .values()
-          .map(this.getSizeIndex)
-          .value()
-
-        this.sizeRange = {
-          lower: +_.min(indices) || 0,
-          upper: +_.max(indices) || 8
-        }
-      });
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
 
     af.database.list('/options/diapers/sizes')
       .subscribe(sizeOptions => {
@@ -51,13 +41,17 @@ export class Diapers {
           .subscribe(sizePrefs => {
             this.sizePref = _.first(sizePrefs) ? _.first(sizePrefs).$key : _.first(this.sizeOptions).$key
 
-            this.isRange = sizePrefs.length > 1
+            this.sizeQuantity = sizePrefs.length > 1 ? 'range' : 'exactly';
+
+            loading.dismiss();
           })
       })
 
-    af.database.list('/options/diapers/brands')
+    this.brandOptions = af.database.list('/options/diapers/brands')
+
+    af.database.list('/preferences/' + this.child.$key + '/diapers/brands')
       .subscribe(data => {
-        this.brandOptions = data
+        this.brandsPref = data
       })
   }
 
@@ -68,11 +62,8 @@ export class Diapers {
 
     sizes[this.sizePref] = true;
 
-    console.log(this.isRange)
-
-    if (this.isRange) {
+    if (this.sizeQuantity === 'range') {
       let sizePrefIndex = _.findIndex(this.sizeOptions, { '$key': this.sizePref });
-
 
       let upperSizes: any[] = _.filter(this.sizeOptions, (option, index) => {
         return index > sizePrefIndex
@@ -84,10 +75,6 @@ export class Diapers {
     }
 
     this.af.database.object('/preferences/' + this.child.$key + '/diapers/sizes').set(sizes)
-  }
-
-  getRange() {
-    return this.getSizeText(this.sizeRange.lower) + ' - ' + this.getSizeText(this.sizeRange.upper);
   }
 
   getSizeText(num) {
@@ -116,31 +103,13 @@ export class Diapers {
     }
   }
 
-  // setSizePreference(sizeOptions) {
-  //   let range: any[] = _.range(this.sizeRange.lower, this.sizeRange.upper + 1);
-  //   let namedRange = _.map(range, this.getSizeText)
-  //   let rangeObject: any = _.toPlainObject(namedRange);
-
-  //   var sizes = _.mapKeys(rangeObject, function(size) {
-  //     return _.findKey(sizeOptions, _.partial(_.isEqual, size))
-  //   })
-
-  //   this.userPrefs.update({ sizes: sizes })
-  // }
-
   addBrand(brand) {
-    var brands = {}
+    this.af.database.object('/preferences/' + this.child.$key + '/diapers/brands/' + brand.$key)
+      .set(brand.$value)
+  }
 
-    brands[brand.$key] = brand.$value;
-
-    this.userPrefs.update({
-        brands: brands
-      })
-      .then(() => {
-
-      })
+  removeBrand(brand) {
+    this.af.database.object('/preferences/' + this.child.$key + '/diapers/brands/' + brand.$key)
+      .remove()
   }
 }
-
-
-// Brands needs to go back to an async array, then we're going to have to build a pipe to filter out the ones already in the user preferences
