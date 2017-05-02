@@ -18,10 +18,12 @@ import 'rxjs/add/operator/take'
 export class Diapers {
   child: any
   userPrefs: FirebaseObjectObservable < any >
+    sizePref: any = {}
   states: FirebaseObjectObservable < any >
-  brandOptions: any = []
-    sizeOptions: any = {};
+    brandOptions: any = []
+  sizeOptions: any[] = []
   sizeRange: { lower: number;upper: number } = { lower: 0, upper: 8 }
+  isRange: boolean
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private af: AngularFire) {
     this.child = this.navParams.data;
@@ -41,18 +43,48 @@ export class Diapers {
         }
       });
 
-    af.database.object('/options/diapers/sizes')
-      .subscribe(data => {
-        this.sizeOptions = data;
+    af.database.list('/options/diapers/sizes')
+      .subscribe(sizeOptions => {
+        this.sizeOptions = sizeOptions;
+
+        af.database.list('/preferences/' + this.child.$key + '/diapers/sizes')
+          .subscribe(sizePrefs => {
+            this.sizePref = _.first(sizePrefs) ? _.first(sizePrefs).$key : _.first(this.sizeOptions).$key
+
+            this.isRange = sizePrefs.length > 1
+          })
       })
 
-      af.database.list('/options/diapers/brands')
+    af.database.list('/options/diapers/brands')
       .subscribe(data => {
         this.brandOptions = data
       })
   }
 
   ionViewDidLoad() {}
+
+  updateSizePref() {
+    let sizes = {}
+
+    sizes[this.sizePref] = true;
+
+    console.log(this.isRange)
+
+    if (this.isRange) {
+      let sizePrefIndex = _.findIndex(this.sizeOptions, { '$key': this.sizePref });
+
+
+      let upperSizes: any[] = _.filter(this.sizeOptions, (option, index) => {
+        return index > sizePrefIndex
+      })
+
+      _.forEach(upperSizes, (size) => {
+        sizes[size.$key] = true
+      })
+    }
+
+    this.af.database.object('/preferences/' + this.child.$key + '/diapers/sizes').set(sizes)
+  }
 
   getRange() {
     return this.getSizeText(this.sizeRange.lower) + ' - ' + this.getSizeText(this.sizeRange.upper);
@@ -84,17 +116,17 @@ export class Diapers {
     }
   }
 
-  setSizePreference(sizeOptions) {
-    let range: any[] = _.range(this.sizeRange.lower, this.sizeRange.upper + 1);
-    let namedRange = _.map(range, this.getSizeText)
-    let rangeObject: any = _.toPlainObject(namedRange);
+  // setSizePreference(sizeOptions) {
+  //   let range: any[] = _.range(this.sizeRange.lower, this.sizeRange.upper + 1);
+  //   let namedRange = _.map(range, this.getSizeText)
+  //   let rangeObject: any = _.toPlainObject(namedRange);
 
-    var sizes = _.mapKeys(rangeObject, function(size) {
-      return _.findKey(sizeOptions, _.partial(_.isEqual, size))
-    })
+  //   var sizes = _.mapKeys(rangeObject, function(size) {
+  //     return _.findKey(sizeOptions, _.partial(_.isEqual, size))
+  //   })
 
-    this.userPrefs.update({ sizes: sizes })
-  }
+  //   this.userPrefs.update({ sizes: sizes })
+  // }
 
   addBrand(brand) {
     var brands = {}
@@ -102,11 +134,11 @@ export class Diapers {
     brands[brand.$key] = brand.$value;
 
     this.userPrefs.update({
-      brands: brands
-    })
-    .then(() => {
+        brands: brands
+      })
+      .then(() => {
 
-    })
+      })
   }
 }
 

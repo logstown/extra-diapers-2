@@ -9,40 +9,58 @@
         <ion-title>{{child.name}}</ion-title>
     </ion-navbar>
 </ion-header>
-<ion-content padding>
+<ion-content>
     <ion-list>
-        <ion-item>
+        <ion-list-header>
             <ion-label>Diapers</ion-label>
             <ion-toggle [ngModel]="(states| async)?.diapers" (ngModelChange)="states.update({diapers:$event})"></ion-toggle>
-        </ion-item>
+        </ion-list-header>
     </ion-list>
-    <ion-card>
-        <ion-list *ngIf="(states | async)?.diapers" no-lines>
-            <ion-item>
-                Size
-                <ion-badge item-right>{{getRange()}}</ion-badge>
-            </ion-item>
-            <ion-item>
-                <ion-range dualKnobs="true" [(ngModel)]="sizeRange" min="0" max="8" snaps="true" debounce="1000" color="secondary" (ngModelChange)="setSizePreference(sizeOptions)"></ion-range>
+    <ng-container *ngIf="(states | async)?.diapers">
+        <!-- <ion-card>
+            <ion-list no-lines>
+                <ion-item>
+                    Size
+                    <ion-badge item-right>{{getRange()}}</ion-badge>
+                </ion-item>
+                <ion-item>
+                    <ion-range dualKnobs="true" [(ngModel)]="sizeRange" min="0" max="8" snaps="true" debounce="1000" color="secondary" pin="true" (ngModelChange)="setSizePreference(sizeOptions)"></ion-range>
+                </ion-item>
+            </ion-list>
+        </ion-card> -->
+        <ion-list>
+        	<ion-item>
+        		<ion-label>Size</ion-label>
+        		<ion-select [(ngModel)]="sizePref" interface="popover" (ngModelChange)="updateSizePref()">
+        			<ion-option *ngFor="let option of sizeOptions" [value]="option.$key" >{{option.$value}}</ion-option>
+        		</ion-select>
+        		<ion-select [(ngModel)]="isRange" interface="popover" (ngModelChange)="updateSizePref()">
+        			<ion-option [value]="false">Exactly</ion-option>
+        			<ion-option [value]="true">Or Larger</ion-option>
+        		</ion-select>
+        	</ion-item>
+        </ion-list>
+        <ion-grid style="margin-top: 20px; padding-bottom: 10px;">
+            <ion-row>
+                <ion-col col-3>Brands:</ion-col>
+                <ion-col col-9>
+                <!-- <ion-note>Please choose a brand or two:</ion-note> -->
+                    <ion-chip item-right color="primary">
+                        <ion-label>Thing</ion-label>
+                        <button ion-button clear color="light" (click)="delete(chip1)">
+                            <ion-icon name="close-circle"></ion-icon>
+                        </button>
+                    </ion-chip>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+        <ion-list style="height: 50%; overflow-y: scroll;">
+            <ion-item *ngFor="let brand of brandOptions" (click)="addBrand(brand)">
+            	<ion-avatar item-left>
+            		<img src="/assets/diapers/huggies.png" alt="">
+            	</ion-avatar>
+                {{brand.$value}}
             </ion-item>
         </ion-list>
-    </ion-card>
-    <ion-grid>
-        <ion-row>
-            <ion-col col-3 style="padding-top: 14px;">Brands:</ion-col>
-            <ion-col col-9>
-                <ion-chip item-right color="primary">
-                    <ion-label>Thing</ion-label>
-                    <button ion-button clear color="light" (click)="delete(chip1)">
-                        <ion-icon name="close-circle"></ion-icon>
-                    </button>
-                </ion-chip>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
-    <ion-list style="height: 50%; overflow-y: scroll;">
-        <ion-item *ngFor="let brand of brandOptions" (click)="addBrand(brand)">
-            {{brand.$value}}
-        </ion-item>
-    </ion-list>
+    </ng-container>
 </ion-content>
