@@ -1,0 +1,29 @@
+<!--
+  Generated template for the Offering page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <ion-navbar>
+        <ion-title>Your Items</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <ion-fab top right edge>
+        <button ion-fab (click)="addItem()">
+            <ion-icon name="add"></ion-icon>
+        </button>
+    </ion-fab>
+    <ion-list>
+        <ng-container *ngFor="let item of items | async">
+            <ion-item *ngIf="item.item === 'diapers'">
+                <ion-icon name="egg" item-left></ion-icon>
+                <h2>Diapers</h2>
+                <p>{{item.properties.brand.value}}</p>
+                <p>Size: {{item.properties.size.value}}</p>
+                <ion-note item-right>{{item.amount}}</ion-note>
+            </ion-item>
+        </ng-container>
+    </ion-list>
+</ion-content>

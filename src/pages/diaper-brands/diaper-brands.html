@@ -1,0 +1,16 @@
+<!--
+  Generated template for the DiaperBrands page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <ion-navbar>
+        <ion-title>Choose a Brand</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <ion-list>
+        <button ion-item *ngFor="let item of brands | async" (click)="goToNext(item)">{{item.$value}}</button>
+    </ion-list>
+</ion-content>

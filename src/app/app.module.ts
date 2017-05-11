@@ -14,6 +14,10 @@ import { Diapers } from '../pages/diapers/diapers';
 import { Formula } from '../pages/formula/formula';
 import { Clothes } from '../pages/clothes/clothes';
 import { DiapersConfigPage } from '../pages/pages';
+import { Offering } from '../pages/offering/offering';
+import { DiaperBrands } from '../pages/diaper-brands/diaper-brands';
+import { DiaperSizes } from '../pages/diaper-sizes/diaper-sizes';
+import { ConfirmItem } from '../pages/confirm-item/confirm-item';
 
 import { SelectPreferences } from '../components/select-preferences/select-preferences'
 
@@ -51,6 +55,10 @@ export const firebaseConfig = {
     Formula,
     Clothes,
     DiapersConfigPage,
+    Offering,
+    DiaperBrands,
+    DiaperSizes,
+    ConfirmItem,
     MyFilterPipe,
     PropFilterPipe,
     SelectPreferences
@@ -75,6 +83,10 @@ export const firebaseConfig = {
     Formula,
     Clothes,
     DiapersConfigPage,
+    Offering,
+    DiaperBrands,
+    DiaperSizes,
+    ConfirmItem,
     SelectPreferences
   ],
   providers: [

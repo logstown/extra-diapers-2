@@ -1,0 +1,25 @@
+<!--
+  Generated template for the ConfirmItem page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <ion-navbar>
+        <ion-title>Confirm</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <ion-list>
+        <ion-list-header>{{itemName}}</ion-list-header>
+        <ion-item *ngFor="let prop of properties">
+            {{prop.label}}
+            <ion-note item-right>{{prop.value}}</ion-note>
+        </ion-item>
+        <ion-item>
+            Amount
+            <ion-note item-right>{{amount}}</ion-note>
+        </ion-item>
+    </ion-list>
+    <button ion-button large (click)="listIt()">List It!</button>
+</ion-content>
