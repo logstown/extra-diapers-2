@@ -11,11 +11,16 @@ import { ChildrenPage } from '../pages/children/children';
 import { ChildPage } from '../pages/child/child';
 import { AddChildModalPage } from '../pages/children/add-child-modal';
 import { Diapers } from '../pages/diapers/diapers';
+import { Formula } from '../pages/formula/formula';
+import { Clothes } from '../pages/clothes/clothes';
 import { DiapersConfigPage } from '../pages/pages';
+
+import { SelectPreferences } from '../components/select-preferences/select-preferences'
 
 import { AuthService } from '../providers/auth-service';
 
 import { MyFilterPipe } from '../shared/filter-pipe'
+import { PropFilterPipe } from '../shared/property-filter-pipe'
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -43,8 +48,12 @@ export const firebaseConfig = {
     ChildPage,
     AddChildModalPage,
     Diapers,
+    Formula,
+    Clothes,
     DiapersConfigPage,
-    MyFilterPipe
+    MyFilterPipe,
+    PropFilterPipe,
+    SelectPreferences
   ],
   imports: [
     BrowserModule,
@@ -63,7 +72,10 @@ export const firebaseConfig = {
     ChildPage,
     AddChildModalPage,
     Diapers,
-    DiapersConfigPage
+    Formula,
+    Clothes,
+    DiapersConfigPage,
+    SelectPreferences
   ],
   providers: [
     StatusBar,

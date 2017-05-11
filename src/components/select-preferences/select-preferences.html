@@ -1,0 +1,10 @@
+<ion-item-group>
+    <ion-item-divider>
+        {{title}}
+        <button ion-button item-right (click)="selectAll()" [outline]="!allSelected()">All</button>
+    </ion-item-divider>
+    <ion-item *ngFor="let item of preferences">
+        <ion-label>{{item.name}}</ion-label>
+        <ion-checkbox [(ngModel)]="item.checked" (ngModelChange)="updateOne(item)"></ion-checkbox>
+    </ion-item>
+</ion-item-group>

@@ -1,0 +1,37 @@
+<!--
+  Generated template for the Formula page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <ion-navbar>
+        <ion-title>{{child.name}}</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <ion-list>
+        <ion-list-header>
+            <ion-label>Formula</ion-label>
+            <ion-toggle [ngModel]="(states | async)?.formula" (ngModelChange)="states.update({formula:$event})"></ion-toggle>
+        </ion-list-header>
+        <!-- <ion-item>
+            <ion-label>Brands</ion-label>
+            <ion-select [(ngModel)]="brandsPref" (ngModelChange)="updateBrandsPref()" multiple="true">
+                <ion-option (ionSelect)="allClicked(brands)">All</ion-option>
+                <ion-option *ngFor="let brand of brands" [value]="brand.key">{{brand.value}}</ion-option>
+            </ion-select>
+        </ion-item> -->
+        <ng-container *ngIf="(states | async)?.formula">
+            <!-- <ion-item-group>
+                <ion-item-divider>Brands</ion-item-divider>
+                <ion-item *ngFor="let brand of brands">
+                    <ion-label>{{brand.value}}</ion-label>
+                    <ion-checkbox [checked]="isChecked(brand.key, 'brands')" (click)="checkItem(brand, 'brands')"></ion-checkbox>
+                </ion-item>
+            </ion-item-group> -->
+            <select-preferences [title]="'Stages'" [fbUrl]="formulaUrl + 'stages/'" [preferences]="preferences.stages"></select-preferences>
+            <select-preferences [title]="'Types'" [fbUrl]="formulaUrl + 'types/'" [preferences]="preferences.types"></select-preferences>
+        </ng-container>
+    </ion-list>
+</ion-content>

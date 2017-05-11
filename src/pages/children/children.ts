@@ -4,6 +4,8 @@ import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { AuthService } from '../../providers/auth-service';
 import { AddChildModalPage } from './add-child-modal';
 import { Diapers } from '../diapers/diapers'
+import { Formula } from '../formula/formula'
+import { Clothes } from '../clothes/clothes'
 import moment from 'moment';
 
 /*
@@ -73,10 +75,10 @@ export class ChildrenPage {
         this.navCtrl.push(Diapers, child, navOptions);
         break;
       case 'formula':
-        // this.navCtrl.push(FormulaPage, child.$key);
+        this.navCtrl.push(Formula, child, navOptions);
         break;
       case 'clothes':
-        // this.navCtrl.push(ClothesPage, child.$key);
+        this.navCtrl.push(Clothes, child.$key);
         break;
     }
   }
