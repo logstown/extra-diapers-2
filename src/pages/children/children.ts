@@ -78,7 +78,7 @@ export class ChildrenPage {
         this.navCtrl.push(Formula, child, navOptions);
         break;
       case 'clothes':
-        this.navCtrl.push(Clothes, child.$key);
+        this.navCtrl.push(Clothes, child, navOptions);
         break;
     }
   }
